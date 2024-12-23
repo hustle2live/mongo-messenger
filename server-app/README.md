@@ -1,4 +1,4 @@
-# academy-hw8
+# entity relationship diagram for chat-messenger app
 
 ```mermaid
 
