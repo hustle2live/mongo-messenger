@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 const userRouter = new Router();
 
-userRouter.get('/get-qoute', async (req, res) => {
+userRouter.get('/', async (req, res) => {
    try {
       const response = await fetch('QUOTE_URL');
       if (!response.ok) {
@@ -14,7 +14,8 @@ userRouter.get('/get-qoute', async (req, res) => {
       res.status(200).send({ quoteText, quoteAuthor });
    } catch (error) {
       res.statusCode = 500;
-      res.json({ message: error?.message ?? error });
+      // res.json({ message: error?.message ?? error  });
+      res.json({ message: 'Error while fetching forismatic.com'  });
    }
 });
 userRouter.post('/', (req, res) => {});
