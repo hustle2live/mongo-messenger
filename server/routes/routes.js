@@ -1,6 +1,5 @@
-import { Router } from 'express';
-import userRouter from './api/user.route.js';
-import messageRouter from './api/message.route.js';
+import userRouter from './api/userRouter.js';
+import messageRouter from './api/messageRouter.js';
 
 function AppRouter(app) {
    return {
