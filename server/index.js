@@ -1,10 +1,8 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const dbClient = require('./dbClient.js');
-
-// const appRoutes = require('./routes/routes.js');
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { dbClient } from './dbClient.js';
 
 const app = express();
 
@@ -18,9 +16,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json());
 
-// app.get('/', async (req, res) => {});
+const db = dbClient(DATABASE_URL);
 
-app.listen(PORT, async () => {
-   dbClient(DATABASE_URL).connect();
+app.listen(PORT, () => {
    console.log(`Server is running on http://localhost:${PORT}`);
+   db.connect();
 });

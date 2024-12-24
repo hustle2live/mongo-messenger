@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
 
@@ -13,8 +13,12 @@ const dbClient = (uri, options = clientOptions) => {
          } catch (error) {
             console.log('- -- - Can not connect to the database - -- -', error);
          }
+      },
+      disconnect: async () => {
+         await mongoose.disconnect();
+         console.log('db disconected');
       }
    };
 };
 
-module.exports = dbClient;
+export { dbClient };
