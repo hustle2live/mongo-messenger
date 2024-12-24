@@ -7,39 +7,39 @@ title: Database erDiagram
 ---
     erDiagram
 
+
     User {
-        Type Name  "Comment"
-        uuid id PK "Unique Id"
-        varchar(20) firstname
-        varchar(20) lastname
+        uuid id PK
+        varchar(20) name
         varchar(100) email
         varchar(30) password
-        varchar(30) phone
-        uuid avatar FK "None or One"
-        uuid[] rooms FK "User Chats/Dialogs"
     }
 
     Message {
         uuid id PK
         varchar text
-        int user_id FK "Sender Id"
+        uuid user_id FK
         date created_at
         date updated_at
     }
 
-    Room {
+    Chat {
         uuid id PK
+        varchar(20) firstname
+        varchar(20) lastname
+        uuid[] users FK
         uuid[] messages FK
     }
 
-    Room ||--o{ Message : Messages_in_Room
-    User ||--o{ Room : User_ChatRooms
+    Chat ||--o{ Message : Messages_in_ChatRooms
+    User }|--o{ Chat : User_ChatRooms
     User ||--o| Avatar : User_icon
     Avatar ||--|| File : File_id
     Message }o--|| User : Message_Owner
 
     Avatar {
         uuid id PK
+        uuid user_id FK
         uuid file_id FK
     }
 

@@ -1,7 +1,20 @@
 {
+  "name": "reenbit-messenger-be",
+  "version": "1.0.0",
+  "homepage": "",
+  "author": "Volodymyr Kuznietsov",
+  "description": "crud operations express, mongo db",
+  "keywords": [],
+  "main": "index.js",
+  "license": "ISC",
+  "scripts": {
+    "start": "node index.js",
+    "dev" : "nodemon index.js"
+  },
   "dependencies": {
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mongoose": "^8.9.2"
