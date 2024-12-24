@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { dbClient } from './dbClient.js';
-import { appRoutes } from './routes/routes.js';
+import AppRouter from './routes/routes.js';
 
 const app = express();
 
@@ -20,7 +20,9 @@ const DATABASE_URL = process.env.ATLAS_URI;
 
 const db = dbClient(DATABASE_URL);
 
-app.use('/api', appRoutes);
+const router = new AppRouter(app);
+
+router.init();
 
 app.listen(PORT, () => {
    db.connect();

@@ -1,30 +1,17 @@
 import { Router } from 'express';
-import mongoose from 'mongoose';
+import { userRouter, messageRouter } from './api/index.js';
 
-const appRoutes = new Router();
-
-appRoutes.get('/get-qoute', async (req, res) => {
-   try {
-      const response = await fetch('QUOTE_URL');
-      if (!response.ok) {
-         throw Error('Error while fetching forismatic.com');
+function AppRouter(app) {
+   return {
+      init: () => {
+         app.get('/api', (req, res) => {
+            console.log('API running');
+            res.status(201).send('Hello API');
+         });
+         app.use('/api/users', userRouter);
+         app.get('/api/messages', messageRouter);
       }
+   };
+}
 
-      const result = await response.json();
-
-      const { quoteText, quoteAuthor } = result;
-
-      res.status(200).send({ quoteText, quoteAuthor });
-   } catch (error) {
-      res.statusCode = 500;
-      res.json({ message: error?.message ?? error });
-   }
-});
-
-appRoutes.post('/', (req, res) => {});
-
-appRoutes.put('/', (req, res) => {});
-
-appRoutes.delete('/', (req, res) => {});
-
-export { appRoutes };
+export default AppRouter;
