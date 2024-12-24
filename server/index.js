@@ -20,6 +20,7 @@ app.use(cors());
 const db = dbClient(DATABASE_URL);
 
 const router = new AppRouter(app);
+
 router.init();
 
 app.listen(PORT, () => {

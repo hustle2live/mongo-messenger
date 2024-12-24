@@ -7,6 +7,9 @@ const chatSchema = new mongoose.Schema({
    messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'messages' }]
 });
 
-const Chat = mongoose.model('chats', chatSchema);
+const chatModel = mongoose.model('chats', chatSchema);
 
-export default Chat;
+export default chatModel;
+
+
+

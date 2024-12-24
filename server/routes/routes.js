@@ -1,5 +1,6 @@
 import userRouter from './api/userRouter.js';
 import messageRouter from './api/messageRouter.js';
+import chatRouter from './api/chatRouter.js';
 
 function AppRouter(app) {
    return {
@@ -10,6 +11,7 @@ function AppRouter(app) {
          });
          app.use('/api/users', userRouter);
          app.use('/api/messages', messageRouter);
+         app.use('/api/chats', chatRouter);
       }
    };
 }

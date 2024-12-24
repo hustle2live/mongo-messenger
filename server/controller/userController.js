@@ -1,8 +1,8 @@
-import User from '../model/userModel.js';
+import UserModel from '../model/userModel.js';
 
 const create = async (req, res) => {
    try {
-      const userData = new User(req.body);
+      const userData = new UserModel(req.body);
 
       // add is exist maybe ?
 
@@ -12,11 +12,12 @@ const create = async (req, res) => {
          throw Error('Can not create user');
       }
 
-      res.status(200).json({ message: `User saved succesfully` });
+      res.status(200).json(createUser);
 
       console.log(userData);
    } catch (error) {
-      res.status(500).json({ message: error });
+      console.log('Error occured');
+      res.status(500).json({ message: error?.message ?? error });
    }
 };
 
