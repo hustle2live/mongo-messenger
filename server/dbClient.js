@@ -20,4 +20,4 @@ const dbClient = (uri, options = clientOptions) => {
    };
 };
 
-export { dbClient };
+export default dbClient;

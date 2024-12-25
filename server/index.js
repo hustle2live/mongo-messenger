@@ -1,29 +1,32 @@
 import express from 'express';
+import { createServer } from 'node:http';
+import { Server } from 'socket.io';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import dotenv from 'dotenv';
-import { dbClient } from './dbClient.js';
-import AppRouter from './routes/routes.js';
+import dbClient from './dbClient.js';
+import appRouter from './routes/routes.js';
+import socketHandler from './socket/socket.js';
 
-dotenv.config();
-
-const PORT = process.env.PORT || 3001;
-const DATABASE_URL = process.env.ATLAS_URI;
+import { PORT, DATABASE_URL, STATIC_PATH } from './config.js';
 
 const app = express();
 
+app.use(express.static(STATIC_PATH));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
 
+const server = createServer(app);
+const io = new Server(server);
+
 const db = dbClient(DATABASE_URL);
 
-const router = new AppRouter(app);
+appRouter(app);
 
-router.init();
+socketHandler(io);
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
    db.connect();
    console.log(`Server is running on http://localhost:${PORT}`);
 });
