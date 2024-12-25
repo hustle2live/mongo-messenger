@@ -7,7 +7,9 @@
          "@/store/*": ["store/*"],
          "@/modules/*": ["modules/*"],
          "@/assets/*": ["assets/*"],
-         "@/images/*": ["assets/images/*"]
+         "@/images/*": ["assets/images/*"],
+         "@/fonts/*": ["assets/fonts/*"],
+         "@/*": ["/*"]
       }
    }
 }
