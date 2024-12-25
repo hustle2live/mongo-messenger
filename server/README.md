@@ -13,6 +13,7 @@ title: Database erDiagram
         varchar(20) name
         varchar(100) email
         varchar(30) password
+        uuid[] chats
     }
 
     Message {
