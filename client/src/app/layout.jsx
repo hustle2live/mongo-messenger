@@ -14,8 +14,8 @@ const montserrat = Montserrat({
 
 const RootLayout = ({ children }) => {
    return (
-      <html lang='en' className={`${montserrat.variable} ${inter.variable}`}>
-         <body>{children}</body>
+      <html id='html' lang='en' className={`${montserrat.variable} ${inter.variable}`}>
+         <body id='body'>{children}</body>
       </html>
    );
 };
