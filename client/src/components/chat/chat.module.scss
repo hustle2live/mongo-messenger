@@ -1,0 +1,123 @@
+.chat_wrapper {
+   display: flex;
+   flex-direction: column;
+   min-width: 600px;
+   width: 600px;
+   height: auto;
+   min-height: 100%;
+   gap: 0;
+
+   &__heading,
+   &__dialog,
+   &__sendform {
+      width: 100%;
+      display: flex;
+      border: 1px solid lightgray;
+      box-sizing: border-box;
+      min-height: 60px;
+      height: 15%;
+      margin: 0;
+      background: #edf1f3;
+   }
+
+   &__heading {
+      padding: 10px 20px;
+      align-items: center;
+      gap: 1rem;
+   }
+
+   &__dialog {
+      flex-direction: column;
+      height: 70%;
+      background: #fcfcfc;
+
+      overflow-y: scroll;
+      padding-bottom: 50px;
+
+      &::-webkit-scrollbar {
+         display: none;
+      }
+   }
+
+   &__sendform {
+      display: flex;
+      justify-content: center;
+      position: relative;
+
+      input,
+      button {
+         height: fit-content;
+         align-self: center;
+         border: 1px solid lightgray;
+      }
+
+      input {
+         width: 65%;
+         padding: 5px 10px;
+         border-radius: 15px;
+      }
+
+      button {
+         box-sizing: border-box;
+         font-size: 12px;
+         padding: 6px 15px;
+         border-radius: 15px;
+         margin-left: 10px;
+      }
+
+      input:focus,
+      button:active {
+         outline: none;
+         border-color: #8ba8c7;
+         box-shadow: 0 0 3px 3px #7ca2a794;
+      }
+   }
+
+   &__message {
+      display: flex;
+      position: relative;
+      padding: 0 5px;
+      font-family: var(--inter);
+
+      &_right,
+      &_left {
+         width: fit-content;
+         font-size: 0.75rem;
+         padding: 10px;
+         border-radius: 15px;
+         margin-bottom: 25px;
+         word-wrap: normal;
+         white-space: '-';
+
+         span {
+            font-family: var(--montserrat);
+            font-size: 10px;
+            color: #646464;
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            padding: 5px;
+         }
+      }
+
+      &_right {
+         background-color: #d9d9d9c1;
+         color: #000;
+         margin-left: auto;
+         text-align: right;
+         margin-right: 0;
+
+         span {
+            left: unset;
+            right: 0;
+         }
+      }
+
+      &_left {
+         background-color: #434451;
+         color: #fff;
+         text-align: left;
+         margin-left: 0;
+      }
+   }
+}

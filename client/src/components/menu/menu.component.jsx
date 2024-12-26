@@ -21,9 +21,21 @@ export const MainMenu = (chatlist = []) => {
 
    const ChatHeadingElement = () => {
       return (
-         <div className='container'>
-            <p>Search</p>
-            <input type='text' />
+         <div className={styles.searchbar_container}>
+            <div className={styles.searchbar_container__favourites}>
+               <div>
+                  <Image src={burgerImage} width={20} height={20} alt='favourites users and chats' />
+                  <p className='capitalize'>{'data.currentUser'}</p>
+               </div>
+            </div>
+
+            <div className={styles.searchbar_container__search_form}>
+               <label htmlFor='live_search'>Search</label>
+               <input id='live_search' value={''} onChange={() => {}} type='text' />
+               <button onClick={() => {}}>
+                  <span className=''>Cancel</span>
+               </button>
+            </div>
          </div>
       );
    };
@@ -72,9 +84,9 @@ export const MainMenu = (chatlist = []) => {
    };
 
    return (
-      <>
+      <div className={styles.menu}>
          <ChatHeadingElement />
          <ChatsListElement />
-      </>
+      </div>
    );
 };

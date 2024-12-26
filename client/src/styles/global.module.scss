@@ -8,6 +8,7 @@ $bg-primary: #34962c;
 }
 
 .heading {
+   padding-left: 1ch;
    font-family: var(--montserrat);
    font-weight: 700;
    font-style: normal;
@@ -21,4 +22,10 @@ $bg-primary: #34962c;
 
 .capitalize {
    text-transform: capitalize;
+}
+
+.main_content {
+   display: flex;
+   flex-wrap: nowrap;
+   width: 100%;
 }
