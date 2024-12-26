@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { socket } from 'socket/socket';
 
 const initialState = {
    userId: 0,
@@ -14,7 +15,9 @@ export const authSlice = createSlice({
    initialState,
    reducers: {
       createConnection: () => {},
-      login: () => {},
+      login: () => {
+         socket.connect();
+      },
       logout: () => {}
    },
    extraReducers: {}

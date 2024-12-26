@@ -8,8 +8,15 @@ import styles from '@/styles/global.module.scss';
 
 import { MainMenu } from '@/components/menu/menu.component';
 import { ChatView } from '@/components/chat/chat.component';
+import { socket } from 'socket/socket';
 
 const Page = () => {
+   useEffect(() => {
+      return () => {
+         socket.disconnect();
+      };
+   }, []);
+
    return (
       <>
          <h1 className={styles.heading}>Wellcome to Next.js App</h1>

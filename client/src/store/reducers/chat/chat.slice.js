@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchChats, createChat, updateChat, deleteChat } from './actions';
+import { fetchChats, createChat, updateChat, deleteChat, createMessage } from './actions';
 import { ActionStatus as ACTION_STATUS } from '../common';
 
 const initialState = {
@@ -31,15 +31,22 @@ export const chatSlice = createSlice({
       builder.addCase(fetchChats.fulfilled, (state, action) => {});
       builder.addCase(fetchChats.pending, (state, action) => {});
       builder.addCase(fetchChats.rejected, (state, action) => {});
+
       builder.addCase(createChat.fulfilled, (state, action) => {});
       builder.addCase(createChat.pending, (state, action) => {});
       builder.addCase(createChat.rejected, (state, action) => {});
+
       builder.addCase(updateChat.fulfilled, (state, action) => {});
       builder.addCase(updateChat.pending, (state, action) => {});
       builder.addCase(updateChat.rejected, (state, action) => {});
+
       builder.addCase(deleteChat.fulfilled, (state, action) => {});
       builder.addCase(deleteChat.pending, (state, action) => {});
       builder.addCase(deleteChat.rejected, (state, action) => {});
+
+      builder.addCase(createMessage.fulfilled, (state, action) => {});
+      builder.addCase(createMessage.pending, (state, action) => {});
+      builder.addCase(createMessage.rejected, (state, action) => {});
    }
 });
 

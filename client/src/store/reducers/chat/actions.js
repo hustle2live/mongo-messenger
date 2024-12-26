@@ -70,4 +70,21 @@ const deleteChat = createAsyncThunk(
    }
 );
 
-export { fetchChats, createChat, updateChat, deleteChat };
+const createMessage = createAsyncThunk(
+   ActionTypes.ADD_MESSAGE,
+   async (_payload, { getState, rejectWithValue, dispatch }) => {
+      try {
+         const response = await fetch();
+
+         if (!response.ok) rejectWithValue(ErrorTypes.DELETE_UPDATE);
+
+         const data = await response.json();
+
+         return data;
+      } catch (error) {
+         rejectWithValue(error);
+      }
+   }
+);
+
+export { fetchChats, createChat, updateChat, deleteChat, createMessage };

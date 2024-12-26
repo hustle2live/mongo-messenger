@@ -2,7 +2,8 @@ const ActionTypes = {
    FETCH_CHATS: 'chats/fetch',
    CREATE_CHAT: 'chats/create',
    UPDATE_CHAT: 'chats/update',
-   DELETE_CHAT: 'chats/delete'
+   DELETE_CHAT: 'chats/delete',
+   ADD_MESSAGE: 'chats/add-message'
 };
 
 const ErrorTypes = {
