@@ -1,0 +1,31 @@
+$bg-primary: #34962c;
+
+#html,
+#body {
+   font-size: 16px;
+   font-weight: 400;
+   font-family: var(--inter);
+}
+
+.heading {
+   padding-left: 1ch;
+   font-family: var(--montserrat);
+   font-weight: 700;
+   font-style: normal;
+}
+
+.text {
+   font-family: var(--inter);
+   font-weight: 400;
+   font-style: normal;
+}
+
+.capitalize {
+   text-transform: capitalize;
+}
+
+.main_content {
+   display: flex;
+   flex-wrap: nowrap;
+   width: 100%;
+}
