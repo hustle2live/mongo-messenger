@@ -40,8 +40,6 @@ export const ChatView = () => {
                  ))}
          </div>
          <Form className={styles.chat_wrapper__sendform} action='/search'>
-            {/* On submission, the input value will be appended to 
-          the URL, e.g. /search?query=abc */}
             <input name='query' value={'message'} onChange={() => {}} placeholder='write a message' />
             <button type='submit'>Submit</button>
          </Form>
