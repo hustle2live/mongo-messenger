@@ -12,6 +12,7 @@ const create = async (req, res) => {
       }
 
       const chatData = new ChatModel(req.body);
+      // const chatData = new ChatModel({ ...req.body, users: [userId] });
 
       const createdChat = await chatData.save();
 

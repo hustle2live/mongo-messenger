@@ -1,12 +1,23 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { ErrorTypes, ActionTypes } from './common';
+import { createURL, endpoints } from 'rest-api/api';
 
 const fetchChats = createAsyncThunk(
    ActionTypes.FETCH_CHATS,
    async (_payload, { getState, rejectWithValue, dispatch }) => {
       try {
-         const response = await fetch();
+         const {
+            authReducer: { userId }
+         } = getState();
+         const url = createURL(endpoints.CHATS_CRUD, { userId });
+
+         const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+               'Content-Type': 'application/json'
+            }
+         });
 
          if (!response.ok) rejectWithValue(ErrorTypes.FETCH_CHATS);
 
@@ -21,9 +32,22 @@ const fetchChats = createAsyncThunk(
 
 const createChat = createAsyncThunk(
    ActionTypes.CREATE_CHAT,
-   async (_payload, { getState, rejectWithValue, dispatch }) => {
+   async (payload, { getState, rejectWithValue, dispatch }) => {
       try {
-         const response = await fetch();
+         const { firstname, lastname } = payload;
+         const {
+            authReducer: { userId }
+         } = getState();
+
+         const url = createURL(endpoints.CHATS_CRUD, { userId });
+
+         const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ firstname, lastname })
+         });
 
          if (!response.ok) rejectWithValue(ErrorTypes.CREATE_CHAT);
 
@@ -38,9 +62,23 @@ const createChat = createAsyncThunk(
 
 const updateChat = createAsyncThunk(
    ActionTypes.UPDATE_CHAT,
-   async (_payload, { getState, rejectWithValue, dispatch }) => {
+   async (payload, { getState, rejectWithValue, dispatch }) => {
       try {
-         const response = await fetch();
+         const { firstname, lastname, chatId } = payload;
+         const {
+            authReducer: { userId }
+         } = getState();
+
+         //  const url = createURL(`${endpoints.CHATS_CRUD}/${chatId}`);
+         const url = createURL(`${endpoints.CHATS_CRUD}/${chatId}`, { userId });
+
+         const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ firstname, lastname })
+         });
 
          if (!response.ok) rejectWithValue(ErrorTypes.DELETE_UPDATE);
 
@@ -55,9 +93,22 @@ const updateChat = createAsyncThunk(
 
 const deleteChat = createAsyncThunk(
    ActionTypes.DELETE_CHAT,
-   async (_payload, { getState, rejectWithValue, dispatch }) => {
+   async (payload, { getState, rejectWithValue, dispatch }) => {
       try {
-         const response = await fetch();
+         const { chatId } = payload;
+         const {
+            authReducer: { userId }
+         } = getState();
+
+         //  const url = createURL(`${endpoints.CHATS_CRUD}/${chatId}`);
+         const url = createURL(`${endpoints.CHATS_CRUD}/${chatId}`, { userId });
+
+         const response = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+               'Content-Type': 'application/json'
+            }
+         });
 
          if (!response.ok) rejectWithValue(ErrorTypes.DELETE_UPDATE);
 
@@ -72,9 +123,22 @@ const deleteChat = createAsyncThunk(
 
 const createMessage = createAsyncThunk(
    ActionTypes.ADD_MESSAGE,
-   async (_payload, { getState, rejectWithValue, dispatch }) => {
+   async (payload, { getState, rejectWithValue, dispatch }) => {
       try {
-         const response = await fetch();
+         const { textMessage, chatId } = payload;
+         const {
+            authReducer: { userId }
+         } = getState();
+
+         const url = createURL(endpoints.MESSAGES_CRUD, { userId, chatId });
+
+         const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ text: textMessage })
+         });
 
          if (!response.ok) rejectWithValue(ErrorTypes.DELETE_UPDATE);
 
