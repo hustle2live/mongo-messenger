@@ -1,16 +1,15 @@
-// import { getUser, postSignIn, postSignUp, deleteUser } from '../actions/actions';
+import { fetchChats, createChat, updateChat, deleteChat, createMessage } from './actions';
 
-import { actions } from './auth.slice';
+import { actions } from './chat.slice';
 
 const allActions = {
    ...actions,
-//    getUser,
-//    postSignIn,
-//    postSignUp,
-//    deleteUser
+   fetchChats,
+   createChat,
+   updateChat,
+   deleteChat,
+   createMessage
 };
 
 export { allActions as actions };
-export { reducer } from './auth.slice';
-
-
+export { reducer } from './chat.slice';

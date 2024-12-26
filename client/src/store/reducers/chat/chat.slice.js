@@ -28,26 +28,58 @@ export const chatSlice = createSlice({
       }
    },
    extraReducers(builder) {
-      builder.addCase(fetchChats.fulfilled, (state, action) => {});
-      builder.addCase(fetchChats.pending, (state, action) => {});
-      builder.addCase(fetchChats.rejected, (state, action) => {});
+      builder.addCase(fetchChats.fulfilled, (state, action) => {
+         console.log('response : ', action.payload);
+      });
+      builder.addCase(fetchChats.pending, (state, action) => {
+         console.log('pending...');
+      });
+      builder.addCase(fetchChats.rejected, (state, action) => {
+         console.log('rejected...');
+      });
 
-      builder.addCase(createChat.fulfilled, (state, action) => {});
-      builder.addCase(createChat.pending, (state, action) => {});
-      builder.addCase(createChat.rejected, (state, action) => {});
+      builder.addCase(createChat.fulfilled, (state, action) => {
+         console.log('response : ', action.payload);
+      });
+      builder.addCase(createChat.pending, (state, action) => {
+         console.log('pending...');
+      });
+      builder.addCase(createChat.rejected, (state, action) => {
+         console.log('rejected...');
+      });
 
-      builder.addCase(updateChat.fulfilled, (state, action) => {});
-      builder.addCase(updateChat.pending, (state, action) => {});
-      builder.addCase(updateChat.rejected, (state, action) => {});
+      builder.addCase(updateChat.fulfilled, (state, action) => {
+         console.log('response : ', action.payload);
+      });
+      builder.addCase(updateChat.pending, (state, action) => {
+         console.log('pending...');
+      });
+      builder.addCase(updateChat.rejected, (state, action) => {
+         console.log('rejected...');
+      });
 
-      builder.addCase(deleteChat.fulfilled, (state, action) => {});
-      builder.addCase(deleteChat.pending, (state, action) => {});
-      builder.addCase(deleteChat.rejected, (state, action) => {});
+      builder.addCase(deleteChat.fulfilled, (state, action) => {
+         console.log('response : ', action.payload);
+      });
+      builder.addCase(deleteChat.pending, (state, action) => {
+         console.log('pending...');
+      });
+      builder.addCase(deleteChat.rejected, (state, action) => {
+         console.log('rejected...');
+      });
 
-      builder.addCase(createMessage.fulfilled, (state, action) => {});
-      builder.addCase(createMessage.pending, (state, action) => {});
-      builder.addCase(createMessage.rejected, (state, action) => {});
+      builder.addCase(createMessage.fulfilled, (state, action) => {
+         console.log('response : ', action.payload);
+      });
+      builder.addCase(createMessage.pending, (state, action) => {
+         console.log('pending...');
+      });
+      builder.addCase(createMessage.rejected, (state, action) => {
+         console.log('rejected...');
+      });
    }
 });
+
+export const { actions, name, reducer } = chatSlice;
 
 export default chatSlice.reducer;
