@@ -7,9 +7,16 @@ const fetchChats = createAsyncThunk(
    ActionTypes.FETCH_CHATS,
    async (_payload, { getState, rejectWithValue, dispatch }) => {
       try {
+         console.log('Ho-ho-ho 0');
+
          const {
-            authReducer: { userId }
+            authReducer: { userId },
+            chatReducer: { status }
          } = getState();
+
+         console.log('status ', status);
+         console.log('userId ', userId);
+
          const url = createURL(endpoints.CHATS_CRUD, { userId });
 
          const response = await fetch(url, {
@@ -19,12 +26,21 @@ const fetchChats = createAsyncThunk(
             }
          });
 
-         if (!response.ok) rejectWithValue(ErrorTypes.FETCH_CHATS);
+         console.log('Ho-ho-ho 1');
+         if (!response.ok) {
+            rejectWithValue(ErrorTypes.FETCH_CHATS);
+         }
 
          const data = await response.json();
 
+         if (!data) {
+            console.log('Ho-ho-ho 2');
+            rejectWithValue(ErrorTypes.FETCH_CHATS);
+         }
+         console.log('Ho-ho-ho 3');
          return data;
       } catch (error) {
+         console.log(error);
          rejectWithValue(error);
       }
    }

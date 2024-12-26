@@ -17,7 +17,7 @@ export const ChatView = () => {
       if (chatArrayData.length > 0) setChatData(chatArrayData);
    }, []);
 
-   console.log(chatData);
+   // console.log(chatData);
 
    const messageClassName = (prop) => (prop ? styles.chat_wrapper__message_right : styles.chat_wrapper__message_left);
 

@@ -17,7 +17,7 @@ export const MainMenu = (chatlist = []) => {
       setChatData(mockdata);
    }, []);
 
-   console.log(chatData);
+   // console.log(chatData);
 
    const ChatHeadingElement = () => {
       return (

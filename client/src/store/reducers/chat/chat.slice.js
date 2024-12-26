@@ -3,8 +3,6 @@ import { fetchChats, createChat, updateChat, deleteChat, createMessage } from '.
 import { ActionStatus as ACTION_STATUS } from '../common';
 
 const initialState = {
-   userId: 0,
-   socketId: 0,
    chatList: [],
    newMessage: null,
    status: ACTION_STATUS.default,
@@ -82,4 +80,4 @@ export const chatSlice = createSlice({
 
 export const { actions, name, reducer } = chatSlice;
 
-export default chatSlice.reducer;
+// export default chatSlice.reducer;
