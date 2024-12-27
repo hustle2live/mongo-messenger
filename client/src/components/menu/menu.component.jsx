@@ -119,7 +119,33 @@ const ChatsListElement = ({ chatList, handleChatClick, handleChatDelete, handleC
    );
 };
 
-export const MenuComponent = ({ chatList }) => {
+const ChatHeadingElement = ({ setFilter }) => {
+   const [searchValue, setSearchValue] = useState('');
+   useEffect(() => {
+      setFilter(searchValue);
+   }, [searchValue, setSearchValue]);
+
+   return (
+      <div className={styles.searchbar_container}>
+         <div className={styles.searchbar_container__favourites}>
+            <div>
+               <Image src={burgerImage} width={20} height={20} alt='favourites users and chats' />
+               <p className='capitalize'>{'data.currentUser'}</p>
+            </div>
+         </div>
+
+         <div className={styles.searchbar_container__search_form}>
+            <label htmlFor='live_search'>Search</label>
+            <input id='live_search' value={searchValue} onChange={(e) => setSearchValue(e.target.value)} type='text' />
+            <button onClick={() => {}}>
+               <span className=''>Cancel</span>
+            </button>
+         </div>
+      </div>
+   );
+};
+
+export const MenuComponent = ({ chatList, setFilter }) => {
    const dispatch = useAppDispatch();
    const [showForm, setShowForm] = useState(false);
    const [formProps, setFormProps] = useState({});
@@ -144,39 +170,11 @@ export const MenuComponent = ({ chatList }) => {
       setFormProps({ actionHandler: chatActionCreator.createChat, createNew: true });
    };
 
-   // const [chatData, setChatData] = useState([]);
-   console.log(' chatList 1 ', chatList);
-
-   // useEffect(() => {
-   //    setChatData(chatList);
-   // }, []);
-
-   // console.log(chatData);
-
-   const ChatHeadingElement = () => {
-      return (
-         <div className={styles.searchbar_container}>
-            <div className={styles.searchbar_container__favourites}>
-               <div>
-                  <Image src={burgerImage} width={20} height={20} alt='favourites users and chats' />
-                  <p className='capitalize'>{'data.currentUser'}</p>
-               </div>
-            </div>
-
-            <div className={styles.searchbar_container__search_form}>
-               <label htmlFor='live_search'>Search</label>
-               <input id='live_search' value={''} onChange={() => {}} type='text' />
-               <button onClick={() => {}}>
-                  <span className=''>Cancel</span>
-               </button>
-            </div>
-         </div>
-      );
-   };
+   // console.log(' chatList 1 ', chatList);
 
    return (
       <div className={styles.menu}>
-         <ChatHeadingElement />
+         <ChatHeadingElement setFilter={setFilter} />
          <ChatsListElement
             chatList={chatList}
             handleChatClick={handleChatClick}

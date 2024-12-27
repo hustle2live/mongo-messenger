@@ -22,7 +22,23 @@ const Page = () => {
    const { isOpened } = useAppSelector(({ chatReducer }) => chatReducer);
    const { chatList } = useAppSelector(({ chatReducer }) => chatReducer);
    const { userId } = useAppSelector(({ authReducer }) => authReducer);
-   // console.log(' chatList ', chatList);
+
+   const [filteredList, setFilteredList] = useState(chatList);
+   const [filter, setFilter] = useState('');
+
+   const filterHandler = () => {
+      if (!filter) {
+         setFilteredList(chatList);
+         return;
+      }
+      try {
+         const regex = new RegExp(filter, 'gi');
+         const list = chatList.filter(({ firstname, lastname }) => firstname.match(regex) || lastname.match(regex));
+         setFilteredList(list);
+      } catch (error) {
+         console.log(error);
+      }
+   };
 
    useEffect(() => {
       console.log('App running');
@@ -35,12 +51,16 @@ const Page = () => {
       };
    }, []);
 
+   useEffect(() => {
+      filterHandler();
+   }, [chatList, filter, setFilter]);
+
    return (
       <>
          <h1 className={styles.heading}>Wellcome to Next.js App</h1>
 
          <div className={styles.main_content}>
-            <MenuComponent chatList={chatList} />
+            <MenuComponent chatList={filteredList} setFilter={setFilter} />
             <ChatComponent isOpened={isOpened} chatList={chatList} userId={userId} />
          </div>
       </>

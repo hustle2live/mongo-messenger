@@ -44,6 +44,8 @@ export const chatSlice = createSlice({
 
       builder.addCase(createChat.fulfilled, (state, { payload }) => {
          const updatedChat = [...state.chatList, payload];
+         console.log(payload);
+
          return { ...state, chatList: updatedChat };
       });
       builder.addCase(createChat.pending, (state, action) => {
