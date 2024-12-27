@@ -16,6 +16,7 @@ import { ChatComponent } from '@/components/chat/chat.component';
 import { socket } from 'socket/socket';
 
 import { actions as chatActionsCreator } from '@/store/reducers/chat/chat';
+import { socketListener } from 'socket/listener';
 
 const Page = () => {
    const dispatch = useAppDispatch();
@@ -44,8 +45,16 @@ const Page = () => {
       console.log('App running');
       dispatch(chatActionsCreator.fetchChats());
 
-      // socket.connect();
-
+      try {
+         socket.connect();
+         const actions = {
+            income: () => console.log('income message!'),
+            connect: () => console.log('connected')
+         };
+         socketListener(socket, dispatch, actions);
+      } catch (error) {
+         console.log(error);
+      }
       return () => {
          socket.disconnect();
       };
