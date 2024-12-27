@@ -9,6 +9,9 @@ const endpoints = {
 
 const BASE_URL = process.env.SERVER_URL;
 
+console.log('BASE_URL, ' + BASE_URL);
+console.log('DATABASE_URI, ' + process.env.DATABASE_URI);
+
 const createURL = (endpoint = '', params = null) => {
    //  paramsType : { a: '111', b: 325, c: 'cat' };
    let query = '';

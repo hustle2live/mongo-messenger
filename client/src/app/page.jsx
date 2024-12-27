@@ -10,8 +10,8 @@ import burgerImage from '@/images/burger.jpg';
 
 import styles from '@/styles/global.module.scss';
 
-import { MainMenu } from '@/components/menu/menu.component';
-import { ChatView } from '@/components/chat/chat.component';
+import { MenuComponent } from '@/components/menu/menu.component';
+import { ChatComponent } from '@/components/chat/chat.component';
 
 import { socket } from 'socket/socket';
 
@@ -19,12 +19,14 @@ import { actions as chatActionsCreator } from '@/store/reducers/chat/chat';
 
 const Page = () => {
    const dispatch = useAppDispatch();
+   const { isOpened } = useAppSelector(({ chatReducer }) => chatReducer);
+   const { chatList } = useAppSelector(({ chatReducer }) => chatReducer);
+   const { userId } = useAppSelector(({ authReducer }) => authReducer);
 
+   console.log('userId ', userId);
    useEffect(() => {
       console.log('App running');
-      
       dispatch(chatActionsCreator.fetchChats());
-
       return () => {
          socket.disconnect();
       };
@@ -35,8 +37,8 @@ const Page = () => {
          <h1 className={styles.heading}>Wellcome to Next.js App</h1>
 
          <div className={styles.main_content}>
-            <MainMenu />
-            <ChatView />
+            <MenuComponent isOpened={isOpened} chatList={chatList} />
+            <ChatComponent isOpened={isOpened} chatList={chatList} userId={userId} />
          </div>
       </>
    );

@@ -3,6 +3,7 @@ import { fetchChats, createChat, updateChat, deleteChat, createMessage } from '.
 import { ActionStatus as ACTION_STATUS } from '../common';
 
 const initialState = {
+   isOpened: null,
    chatList: [],
    newMessage: null,
    status: ACTION_STATUS.default,
@@ -23,11 +24,19 @@ export const chatSlice = createSlice({
       setError: (state, { payload }) => {
          const isError = Boolean(payload);
          state.error = isError;
+      },
+      setOpened: (state, { payload }) => {
+         state.isOpened = payload ?? null;
+      },
+      setChats: (state, action) => {
+         const chats = action.payload ?? [];
+         state.chatList = chats;
       }
    },
    extraReducers(builder) {
-      builder.addCase(fetchChats.fulfilled, (state, action) => {
-         console.log('response : ', action.payload);
+      builder.addCase(fetchChats.fulfilled, (state, { payload }) => {
+         // console.log('response : ', payload);
+         state.chatList = payload;
       });
       builder.addCase(fetchChats.pending, (state, action) => {
          console.log('pending...');

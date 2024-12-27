@@ -1,16 +1,27 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useAppDispatch } from '@/store/hooks.js';
+
 import Image from 'next/image';
 
 import { mockdata } from '../../mockdata.js';
+
+import { actions as chatActionCreator } from '@/store/reducers/chat/chat.slice.js';
 
 import burgerImage from '@/images/burger.jpg';
 import SVGImage from '@/images/christmas-tree-svgrepo-com.svg';
 
 import styles from './menu.module.scss';
 
-export const MainMenu = (chatlist = []) => {
+export const MenuComponent = ({ isOpened, chatList, currentChat }) => {
+   const [activeChat, setActiveChat] = useState(isOpened);
+   const dispatch = useAppDispatch();
+
+   const handleChatClick = (id) => {
+      dispatch(chatActionCreator.setOpened(id));
+   };
+
    const [chatData, setChatData] = useState([]);
 
    useEffect(() => {
@@ -47,36 +58,54 @@ export const MainMenu = (chatlist = []) => {
                Christmas Chats <Image src={SVGImage} alt='tree' width={34} height={30} unoptimized />
             </p>
             <ul className={styles.chats_list}>
-               {chatData.length < 1 ? (
+               {chatList.length < 1 ? (
                   <p>Chat is empty</p>
                ) : (
-                  chatData.map(({ _id, firstname, lastname, users, messages }) => (
-                     <li className={styles.chats_list__item} key={_id}>
-                        <div className={styles.chats_list__item_icon}>
-                           <Image
-                              className={styles.chats_list__chat_image}
-                              src={burgerImage}
-                              width={30}
-                              height={30}
-                              alt='chat preview'
-                           />
-                           <Image
-                              className={styles.chats_list__chat_notifier}
-                              src={burgerImage}
-                              width={10}
-                              height={10}
-                              alt='new message notifier'
-                           />
-                        </div>
-                        <div className={styles.chats_list__item_content}>
-                           <p className={styles.chats_list__chat_name}>
-                              {firstname} {lastname}
-                           </p>
-                           <p className={styles.chats_list__chat_last_text}>{messages.reverse()[0].text}</p>
-                           <p className={styles.chats_list__chat_last_date}>{messages.reverse()[0].created_at}</p>
-                        </div>
-                     </li>
-                  ))
+                  chatList.map(({ _id, firstname, lastname, users, messages }) => {
+                     const selected = _id === isOpened ? styles.selected : '';
+
+                     return (
+                        <li
+                           key={_id}
+                           className={`${styles.chats_list__item} ${selected}`}
+                           onClick={() => handleChatClick(_id)}
+                        >
+                           <div className={styles.chats_list__item_icon}>
+                              <Image
+                                 className={styles.chats_list__chat_image}
+                                 src={burgerImage}
+                                 width={30}
+                                 height={30}
+                                 alt='chat preview'
+                              />
+                              <Image
+                                 className={styles.chats_list__chat_notifier}
+                                 src={burgerImage}
+                                 width={10}
+                                 height={10}
+                                 alt='new message notifier'
+                              />
+                           </div>
+                           <div className={styles.chats_list__item_content}>
+                              <p className={styles.chats_list__chat_name}>
+                                 {firstname} {lastname}
+                              </p>
+                              {messages.length > 0 ? (
+                                 <>
+                                    <p className={styles.chats_list__chat_last_text}>
+                                       {[...messages].reverse()[0]?.text ?? ''}
+                                    </p>
+                                    <p className={styles.chats_list__chat_last_date}>
+                                       {[...messages].reverse()[0]?.created_at ?? ''}
+                                    </p>
+                                 </>
+                              ) : (
+                                 ''
+                              )}
+                           </div>
+                        </li>
+                     );
+                  })
                )}
             </ul>
          </div>

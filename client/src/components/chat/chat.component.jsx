@@ -5,21 +5,28 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import userLogo from '@/images/burger.jpg';
 
-import { mockdata } from '../../mockdata.js';
-
 import styles from './chat.module.scss';
 
-export const ChatView = () => {
+export const ChatComponent = ({ isOpened, chatList, userId }) => {
    const [chatData, setChatData] = useState([]);
 
    useEffect(() => {
-      const chatArrayData = mockdata[1]['messages'];
-      if (chatArrayData.length > 0) setChatData(chatArrayData);
-   }, []);
+      if (!isOpened) {
+         setChatData([]);
+         return;
+      }
+      const idx = chatList.findIndex(({ _id }) => _id === isOpened);
 
-   // console.log(chatData);
+      if (idx >= 0) {
+         setChatData(chatList[idx]['messages']);
+      }
+   }, [isOpened]);
+   // }, [isOpened, chatList]);
 
-   const messageClassName = (prop) => (prop ? styles.chat_wrapper__message_right : styles.chat_wrapper__message_left);
+   const align = (prop) => (prop ? '_left' : '_right');
+   const messageClassName = (position) => styles[`chat_wrapper__message${position}`];
+
+   console.log(chatData);
 
    return (
       <div className={styles.chat_wrapper}>
@@ -30,10 +37,9 @@ export const ChatView = () => {
          <div className={styles.chat_wrapper__dialog}>
             {chatData.length < 1
                ? ''
-               : chatData.map(({ _id, text, user_id, created_at, updated_at }, idx) => (
+               : chatData.map(({ _id, text, user_id, created_at }) => (
                     <div key={_id} className={styles.chat_wrapper__message}>
-                       {/* <Image width={20} height={20} src={userLogo} alt='active user icon' /> */}
-                       <p className={messageClassName(idx % 2 === 0)}>
+                       <p className={messageClassName(align(user_id === userId))}>
                           {text} <span>{created_at}</span>
                        </p>
                     </div>

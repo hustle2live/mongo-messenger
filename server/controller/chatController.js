@@ -90,8 +90,11 @@ const getAllByUserId = async (req, res) => {
       if (!userId || !userData) {
          return res.status(400).json({ message: 'Can not find such user' });
       }
+      // const chatData = await ChatModel.find({ users: { $all: [userId] } });
 
-      const chatData = await ChatModel.find({ users: { $all: [userId] } });
+      const chatData = await ChatModel.find({ users: { $all: [userId] } }).populate('messages');
+
+      // const messages = await currentChat.populate('messages');
 
       res.status(200).json(chatData);
    } catch (error) {

@@ -147,6 +147,14 @@
          text-align: left;
          width: auto;
       }
+
+      &.selected {
+         background: #8ba8c7;
+         p,
+         span {
+            color: #fff;
+         }
+      }
    }
 
    &__chat {

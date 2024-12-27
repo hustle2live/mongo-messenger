@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { socket } from 'socket/socket';
 
 const initialState = {
-   userId: '676abffe95deb53ad300d42c',
+   userId: '676abff495deb53ad300d42a',
    socketId: 0,
    isConnected: false,
    token: null,
