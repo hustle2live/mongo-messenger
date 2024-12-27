@@ -48,7 +48,10 @@ const Page = () => {
       try {
          socket.connect();
          const actions = {
-            income: () => console.log('income message!'),
+            income: (data) => {
+               dispatch(chatActionsCreator.setNewMessage(data));
+               console.log('income message!');
+            },
             connect: () => console.log('connected')
          };
          socketListener(socket, dispatch, actions);

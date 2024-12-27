@@ -17,7 +17,10 @@ import styles from './menu.module.scss';
 import { FormElement } from '../form/form.component.jsx';
 
 const ChatsListElement = ({ chatList, handleChatClick, handleChatDelete, handleChatEdit, handleChatAdd }) => {
-   const { isOpened } = useAppSelector(({ chatReducer }) => chatReducer);
+   const { isOpened, incomes } = useAppSelector(({ chatReducer }) => chatReducer);
+
+   console.log('incomes ', incomes);
+   const isNewIncome = (id) => incomes.includes(id);
 
    const [activeChat, setActiveChat] = useState(isOpened);
    useEffect(() => {
@@ -40,9 +43,7 @@ const ChatsListElement = ({ chatList, handleChatClick, handleChatDelete, handleC
                      <li
                         key={_id}
                         className={`${styles.chats_list__item} ${selected}`}
-                        onClick={() => {
-                           handleChatClick(_id);
-                        }}
+                        onClick={() => handleChatClick(_id)}
                      >
                         <div className={styles.chats_list__item_icon}>
                            <Image
@@ -52,13 +53,15 @@ const ChatsListElement = ({ chatList, handleChatClick, handleChatDelete, handleC
                               height={30}
                               alt='chat preview'
                            />
-                           <Image
-                              className={styles.chats_list__chat_notifier}
-                              src={burgerImage}
-                              width={10}
-                              height={10}
-                              alt='new message notifier'
-                           />
+                           {isNewIncome(_id) && (
+                              <Image
+                                 className={styles.chats_list__chat_notifier}
+                                 src={burgerImage}
+                                 width={10}
+                                 height={10}
+                                 alt='new message notifier'
+                              />
+                           )}
                         </div>
                         <div className={styles.chats_list__item_content}>
                            <p className={styles.chats_list__chat_name}>
@@ -169,8 +172,6 @@ export const MenuComponent = ({ chatList, setFilter }) => {
       setShowForm(true);
       setFormProps({ actionHandler: chatActionCreator.createChat, createNew: true });
    };
-
-   // console.log(' chatList 1 ', chatList);
 
    return (
       <div className={styles.menu}>

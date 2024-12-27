@@ -5,6 +5,7 @@ import { ActionStatus as ACTION_STATUS } from '../common';
 const initialState = {
    isOpened: null,
    chatList: [],
+   incomes: [],
    newMessage: null,
    status: ACTION_STATUS.default,
    success: null,
@@ -24,11 +25,22 @@ export const chatSlice = createSlice({
          state.error = isError;
       },
       setOpened: (state, { payload }) => {
-         state.isOpened = payload ?? null;
+         const chatOpened = payload;
+         const updatedIncomes = state.incomes.filter((id) => id !== chatOpened);
+         return { ...state, isOpened: chatOpened, incomes: updatedIncomes };
       },
       setChats: (state, action) => {
          const chats = action?.payload ?? [];
          return { ...state, chatList: chats };
+      },
+      setNewMessage: (state, { payload }) => {
+         const updatedChatId = payload._id;
+         const updated = state.chatList.map((chat) => (chat._id === updatedChatId ? payload : chat));
+         const updatedIncomes = [...state.incomes];
+         if (state.isOpened !== updatedChatId) {
+            updatedIncomes.push(updatedChatId);
+         }
+         return { ...state, chatList: updated, incomes: updatedIncomes };
       }
    },
    extraReducers(builder) {
@@ -44,8 +56,6 @@ export const chatSlice = createSlice({
 
       builder.addCase(createChat.fulfilled, (state, { payload }) => {
          const updatedChat = [...state.chatList, payload];
-         console.log(payload);
-
          return { ...state, chatList: updatedChat };
       });
       builder.addCase(createChat.pending, (state, action) => {
