@@ -1,5 +1,6 @@
 import MessageModel from '../model/messageModel.js';
 import ChatModel from '../model/chatModel.js';
+
 import { socketEmitter } from '../index.js';
 
 const fakeUserId = '676abffe95deb53ad300d42c';
@@ -14,6 +15,7 @@ const qouteGenerator = async () => {
       const result = await response.json();
 
       const { quoteText } = result;
+      console.log(quoteText);
 
       return quoteText;
    } catch (error) {
@@ -25,13 +27,16 @@ const qouteGenerator = async () => {
 const autoResponse = async (chat_id) => {
    try {
       const getQoute = await qouteGenerator();
+      if (!getQoute) {
+         throw Error('Error. Can not GET qoute.');
+      }
+
       const user_id = fakeUserId;
 
       const request = {
          query: { chatId: chat_id, userId: user_id },
          body: { text: getQoute }
       };
-
       const response = {
          success: '',
          result: '',
@@ -40,7 +45,6 @@ const autoResponse = async (chat_id) => {
                json: (item) => {
                   response.success = num === 200 ? 'success' : 'error';
                   response.result = item;
-                  return item;
                }
             };
          }
@@ -87,6 +91,51 @@ const create = async (req, res) => {
    }
 };
 
+let intervalId;
+let chatList = [];
+
+const flahsChatIds = () => {
+   try {
+      const maxIdx = chatList.length;
+      if (maxIdx < 1) {
+         return;
+      }
+      const randomIdx = Math.floor(Math.random() * maxIdx);
+      const { _id } = chatList[randomIdx];
+      autoResponse(_id);
+   } catch (error) {
+      console.log(error);
+   }
+};
+
+function sendChats() {
+   if (!intervalId) {
+      intervalId = setInterval(flahsChatIds, 5000);
+      console.log('Auto-sender is running... ');
+   }
+}
+
+function stopSendChats() {
+   clearInterval(intervalId);
+   intervalId = null;
+   console.log('Auto-sender Stoped!');
+}
+
+const autoMode = async (req, res) => {
+   try {
+      const mode = JSON.parse(req.query.autoMode);
+      if (!mode) {
+         stopSendChats();
+         return;
+      }
+      const chatIndexes = await ChatModel.find().select('_id');
+      chatList = chatIndexes;
+      sendChats();
+   } catch (error) {
+      console.log(error);
+   }
+};
+
 const update = async (req, res) => {
    try {
       const userData = req.body;
@@ -101,4 +150,4 @@ const remove = async (req, res) => {
    } catch (error) {}
 };
 
-export const MessageController = { create, update, remove };
+export const MessageController = { create, update, remove, autoMode };

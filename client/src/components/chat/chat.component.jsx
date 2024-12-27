@@ -12,6 +12,7 @@ import { actions as chatActionCreator } from '@/store/reducers/chat/chat';
 export const ChatComponent = ({ isOpened, chatList, userId }) => {
    const [chatData, setChatData] = useState([]);
    const [formValue, setFormValue] = useState('');
+   const [chatName, setChatName] = useState('chat name');
 
    const dispatch = useAppDispatch();
 
@@ -23,7 +24,10 @@ export const ChatComponent = ({ isOpened, chatList, userId }) => {
       const idx = chatList.findIndex(({ _id }) => _id === isOpened);
 
       if (idx >= 0) {
-         setChatData(chatList[idx]['messages']);
+         const chatElement = chatList[idx];
+         setChatData(chatElement['messages']);
+         const { firstname, lastname } = chatElement;
+         setChatName(`${firstname} ${lastname}`);
       }
    }, [isOpened, chatList]);
 
@@ -33,8 +37,8 @@ export const ChatComponent = ({ isOpened, chatList, userId }) => {
    return (
       <div className={styles.chat_wrapper}>
          <div className={styles.chat_wrapper__heading}>
-            <Image width={20} height={20} src={userLogo} alt='active user icon' />
-            <span className='capitalize'>{'data.currentUser'}</span>
+            <Image width={40} height={40} src={userLogo} alt='active user icon' />
+            <span className='capitalize'>{chatName}</span>
          </div>
          <div className={styles.chat_wrapper__dialog}>
             {chatData.length < 1

@@ -9,7 +9,7 @@ const socketResponder = (io) => {
 const socketHandler = (io) => {
    io.on('connection', (socket) => {
       const connectedMessage = '\x1b[36mA New User Connected \u2713 \x1b[0m';
-      console.log(connectedMessage);
+      console.log(connectedMessage, socket.id);
 
       const auth = JSON.stringify({
          success: true,

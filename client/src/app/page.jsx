@@ -5,9 +5,6 @@ import { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
-import Image from 'next/image';
-import burgerImage from '@/images/burger.jpg';
-
 import styles from '@/styles/global.module.scss';
 
 import { MenuComponent } from '@/components/menu/menu.component';
@@ -15,6 +12,7 @@ import { ChatComponent } from '@/components/chat/chat.component';
 
 import { socket } from 'socket/socket';
 
+import { actions as authActions } from '@/store/reducers/auth/auth.slice';
 import { actions as chatActionsCreator } from '@/store/reducers/chat/chat';
 import { socketListener } from 'socket/listener';
 
@@ -52,7 +50,10 @@ const Page = () => {
                dispatch(chatActionsCreator.setNewMessage(data));
                console.log('income message!');
             },
-            connect: () => console.log('connected')
+            connect: (data) => {
+               dispatch(authActions.login(data));
+               console.log('connected');
+            }
          };
          socketListener(socket, dispatch, actions);
       } catch (error) {

@@ -2,13 +2,13 @@ const endpoints = {
    CHATS_CRUD: 'chats', // ? userId= or /:id for PUT, DELETE, GET one
    MESSAGES_CRUD: 'messages', // ? chatId=  & userId=
    USERS_CRUD: 'users',
+   AUTO_MODE: 'messages/auto',
 
    CHATS_FETCH_ALL: 'chats/all', // gets all db chats - only for development
    USERS_FETCH_ALL: 'users/all' // gets all db users - only for development
 };
 
 const BASE_URL = process.env.SERVER_URL;
-
 
 const createURL = (endpoint = '', params = null) => {
    //  paramsType : { a: '111', b: 325, c: 'cat' };

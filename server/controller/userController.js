@@ -4,8 +4,6 @@ const create = async (req, res) => {
    try {
       const userData = new UserModel(req.body);
 
-      // add is exist maybe ?
-
       const createUser = await userData.save();
 
       if (!createUser) {

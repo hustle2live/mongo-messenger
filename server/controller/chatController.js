@@ -12,7 +12,6 @@ const create = async (req, res) => {
       }
 
       const chatData = new ChatModel(req.body);
-      // const chatData = new ChatModel({ ...req.body, users: [userId] });
 
       const createdChat = await chatData.save();
 
@@ -34,7 +33,6 @@ const update = async (req, res) => {
    try {
       const { id } = req.params;
       const { firstname, lastname } = req.body;
-      console.log(firstname, lastname);
 
       if (!firstname && !lastname) {
          throw Error('Error while updatind data. Fields are Empty.');
@@ -92,11 +90,8 @@ const getAllByUserId = async (req, res) => {
       if (!userId || !userData) {
          return res.status(400).json({ message: 'Can not find such user' });
       }
-      // const chatData = await ChatModel.find({ users: { $all: [userId] } });
 
       const chatData = await ChatModel.find({ users: { $all: [userId] } }).populate('messages');
-
-      // const messages = await currentChat.populate('messages');
 
       res.status(200).json(chatData);
    } catch (error) {
