@@ -8,12 +8,12 @@ import { useAppDispatch } from '@/store/hooks';
 import styles from './form.module.scss';
 
 export const FormElement = ({ formProps, display, setDisplay }) => {
-   const { chatId, firstname = '', lastname = '', actionHandler } = formProps;
+   const { chatId, firstname = '', lastname = '', actionHandler, createNew } = formProps;
 
    const [valueOne, setValueOne] = useState(firstname);
    const [valueTwo, setValueTwo] = useState(lastname);
 
-   // console.log('chatId ' + chatId, firstname, lastname);
+   const formHeading = createNew ? 'Create new Chat' : 'Update a Chat';
 
    const dispatch = useAppDispatch();
 
@@ -36,6 +36,7 @@ export const FormElement = ({ formProps, display, setDisplay }) => {
          disabled={!display}
          className={`${styles.formElement} ${hiddenClass}`}
       >
+         <p>{formHeading}</p>
          <div>
             <section>
                <label htmlFor='firstname'>set chat first name</label>

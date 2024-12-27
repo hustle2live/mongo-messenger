@@ -11,8 +11,6 @@ const initialState = {
    error: null
 };
 
-// const resetStatus = (state) =>
-
 export const chatSlice = createSlice({
    name: 'chats',
    initialState,
@@ -35,8 +33,7 @@ export const chatSlice = createSlice({
    },
    extraReducers(builder) {
       builder.addCase(fetchChats.fulfilled, (state, { payload }) => {
-         // console.log('response : ', payload);
-         state.chatList = payload;
+         return { ...state, chatList: payload };
       });
       builder.addCase(fetchChats.pending, (state, action) => {
          console.log('pending...');
@@ -46,9 +43,7 @@ export const chatSlice = createSlice({
       });
 
       builder.addCase(createChat.fulfilled, (state, { payload }) => {
-         const updatedChat = [...state.chatList].map((chat) => (chat._id === payload._id ? payload : chat));
-         console.log('updatedChat : ', updatedChat);
-
+         const updatedChat = [...state.chatList, payload];
          return { ...state, chatList: updatedChat };
       });
       builder.addCase(createChat.pending, (state, action) => {
@@ -59,7 +54,6 @@ export const chatSlice = createSlice({
       });
 
       builder.addCase(updateChat.fulfilled, (state, { payload }) => {
-         console.log('response : ', payload);
          const updated = state.chatList.map((chat) => (chat._id === payload._id ? payload : chat));
          return { ...state, chatList: updated };
       });
@@ -71,7 +65,6 @@ export const chatSlice = createSlice({
       });
 
       builder.addCase(deleteChat.fulfilled, (state, { payload }) => {
-         console.log('response : ', payload);
          const { _id } = payload;
          const updated = state.chatList.filter((chat) => chat._id !== _id);
          return { ...state, chatList: updated };

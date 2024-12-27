@@ -11,9 +11,6 @@ const fetchChats = createAsyncThunk(
             authReducer: { userId }
          } = getState();
 
-         // console.log('status ', status);
-         // console.log('userId ', userId);
-
          const url = createURL(endpoints.CHATS_CRUD, { userId });
 
          const response = await fetch(url, {

@@ -6,8 +6,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks.js';
 import Image from 'next/image';
 import IconTrash from '@/images/trash-bin.svg';
 import IconEdit from '@/images/edit.svg';
-
-import { mockdata } from '../../mockdata.js';
+import IconPlus from '@/images/add-plus.svg';
 
 import { actions as chatActionCreator } from '@/store/reducers/chat/chat.js';
 
@@ -17,7 +16,7 @@ import SVGImage from '@/images/christmas-tree-svgrepo-com.svg';
 import styles from './menu.module.scss';
 import { FormElement } from '../form/form.component.jsx';
 
-const ChatsListElement = ({ chatList, handleChatClick, handleChatDelete, handleChatEdit }) => {
+const ChatsListElement = ({ chatList, handleChatClick, handleChatDelete, handleChatEdit, handleChatAdd }) => {
    const { isOpened } = useAppSelector(({ chatReducer }) => chatReducer);
 
    const [activeChat, setActiveChat] = useState(isOpened);
@@ -113,7 +112,9 @@ const ChatsListElement = ({ chatList, handleChatClick, handleChatDelete, handleC
                })
             )}
          </ul>
-         <button>Add Chat</button>
+         <button className={styles.chats__button_add} onClick={handleChatAdd}>
+            <Image src={IconPlus} width={50} height={50} alt='plus' />
+         </button>
       </div>
    );
 };
@@ -137,6 +138,10 @@ export const MenuComponent = ({ chatList }) => {
          lastname: lastName,
          actionHandler: chatActionCreator.updateChat
       });
+   };
+   const handleChatAdd = () => {
+      setShowForm(true);
+      setFormProps({ actionHandler: chatActionCreator.createChat, createNew: true });
    };
 
    // const [chatData, setChatData] = useState([]);
@@ -177,6 +182,7 @@ export const MenuComponent = ({ chatList }) => {
             handleChatClick={handleChatClick}
             handleChatDelete={handleChatDelete}
             handleChatEdit={handleChatEdit}
+            handleChatAdd={handleChatAdd}
          />
          <FormElement formProps={formProps} display={showForm} setDisplay={setShowForm} />
       </div>
