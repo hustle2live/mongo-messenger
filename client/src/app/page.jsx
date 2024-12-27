@@ -22,10 +22,14 @@ const Page = () => {
    const { isOpened } = useAppSelector(({ chatReducer }) => chatReducer);
    const { chatList } = useAppSelector(({ chatReducer }) => chatReducer);
    const { userId } = useAppSelector(({ authReducer }) => authReducer);
+   // console.log(' chatList ', chatList);
 
    useEffect(() => {
       console.log('App running');
       dispatch(chatActionsCreator.fetchChats());
+
+      // socket.connect();
+
       return () => {
          socket.disconnect();
       };
@@ -36,7 +40,7 @@ const Page = () => {
          <h1 className={styles.heading}>Wellcome to Next.js App</h1>
 
          <div className={styles.main_content}>
-            <MenuComponent isOpened={isOpened} chatList={chatList} />
+            <MenuComponent chatList={chatList} />
             <ChatComponent isOpened={isOpened} chatList={chatList} userId={userId} />
          </div>
       </>

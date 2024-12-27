@@ -6,9 +6,14 @@ import Image from 'next/image';
 import userLogo from '@/images/burger.jpg';
 
 import styles from './chat.module.scss';
+import { useAppDispatch } from '@/store/hooks';
+import { actions as chatActionCreator } from '@/store/reducers/chat/chat';
 
 export const ChatComponent = ({ isOpened, chatList, userId }) => {
    const [chatData, setChatData] = useState([]);
+   const [formValue, setFormValue] = useState('');
+
+   const dispatch = useAppDispatch();
 
    useEffect(() => {
       if (!isOpened) {
@@ -45,8 +50,21 @@ export const ChatComponent = ({ isOpened, chatList, userId }) => {
                     </div>
                  ))}
          </div>
-         <Form className={styles.chat_wrapper__sendform} action='/search'>
-            <input name='query' value={'message'} onChange={() => {}} placeholder='write a message' />
+         <Form
+            className={styles.chat_wrapper__sendform}
+            action={() => {
+               const newMessage = { textMessage: formValue, chatId: isOpened };
+               dispatch(chatActionCreator.createMessage(newMessage));
+               setFormValue('');
+            }}
+         >
+            <input
+               disabled={!isOpened}
+               name='query'
+               value={formValue}
+               onChange={(e) => setFormValue(e.target.value)}
+               placeholder='write a message'
+            />
             <button type='submit'>Submit</button>
          </Form>
       </div>

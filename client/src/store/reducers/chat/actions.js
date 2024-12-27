@@ -7,15 +7,12 @@ const fetchChats = createAsyncThunk(
    ActionTypes.FETCH_CHATS,
    async (_payload, { getState, rejectWithValue, dispatch }) => {
       try {
-         console.log('Ho-ho-ho 0');
-
          const {
-            authReducer: { userId },
-            chatReducer: { status }
+            authReducer: { userId }
          } = getState();
 
-         console.log('status ', status);
-         console.log('userId ', userId);
+         // console.log('status ', status);
+         // console.log('userId ', userId);
 
          const url = createURL(endpoints.CHATS_CRUD, { userId });
 
@@ -26,22 +23,19 @@ const fetchChats = createAsyncThunk(
             }
          });
 
-         console.log('Ho-ho-ho 1');
          if (!response.ok) {
-            rejectWithValue(ErrorTypes.FETCH_CHATS);
+            throw Error(ErrorTypes.FETCH_CHATS);
          }
 
          const data = await response.json();
 
          if (!data) {
-            console.log('Ho-ho-ho 2');
-            rejectWithValue(ErrorTypes.FETCH_CHATS);
+            throw Error(ErrorTypes.FETCH_CHATS);
          }
-         console.log('Ho-ho-ho 3');
+
          return data;
       } catch (error) {
-         console.log(error);
-         rejectWithValue(error);
+         return rejectWithValue(error);
       }
    }
 );
@@ -65,13 +59,15 @@ const createChat = createAsyncThunk(
             body: JSON.stringify({ firstname, lastname })
          });
 
-         if (!response.ok) rejectWithValue(ErrorTypes.CREATE_CHAT);
+         if (!response.ok) {
+            throw Error(ErrorTypes.CREATE_CHAT);
+         }
 
          const data = await response.json();
 
          return data;
       } catch (error) {
-         rejectWithValue(error);
+         return rejectWithValue(error);
       }
    }
 );
@@ -96,13 +92,15 @@ const updateChat = createAsyncThunk(
             body: JSON.stringify({ firstname, lastname })
          });
 
-         if (!response.ok) rejectWithValue(ErrorTypes.DELETE_UPDATE);
+         if (!response.ok) {
+            throw Error(ErrorTypes.DELETE_UPDATE);
+         }
 
          const data = await response.json();
 
          return data;
       } catch (error) {
-         rejectWithValue(error);
+         return rejectWithValue(error);
       }
    }
 );
@@ -130,13 +128,14 @@ const deleteChat = createAsyncThunk(
             }
          });
 
-         if (!response.ok) rejectWithValue(ErrorTypes.DELETE_UPDATE);
-
+         if (!response.ok) {
+            throw Error(ErrorTypes.DELETE_UPDATE);
+         }
          const data = await response.json();
 
          return data;
       } catch (error) {
-         rejectWithValue(error);
+         return rejectWithValue(error);
       }
    }
 );
@@ -157,16 +156,17 @@ const createMessage = createAsyncThunk(
             headers: {
                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ text: textMessage })
+            body: JSON.stringify({ text: textMessage, created_at: Date.now })
          });
 
-         if (!response.ok) rejectWithValue(ErrorTypes.DELETE_UPDATE);
-
+         if (!response.ok) {
+            throw Error(ErrorTypes.DELETE_UPDATE);
+         }
          const data = await response.json();
 
          return data;
       } catch (error) {
-         rejectWithValue(error);
+         return rejectWithValue(error);
       }
    }
 );

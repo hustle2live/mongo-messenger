@@ -29,8 +29,12 @@ export const chatSlice = createSlice({
          state.isOpened = payload ?? null;
       },
       setChats: (state, action) => {
-         const chats = action.payload ?? [];
-         state.chatList = chats;
+         const chats = action?.payload ?? [];
+         console.log(chats);
+         console.log(state);
+
+         return { ...state, chatList: chats };
+         // state.chatList = chats;
       }
    },
    extraReducers(builder) {
