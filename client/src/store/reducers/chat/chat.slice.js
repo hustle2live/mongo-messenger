@@ -88,5 +88,3 @@ export const chatSlice = createSlice({
 });
 
 export const { actions, name, reducer } = chatSlice;
-
-// export default chatSlice.reducer;

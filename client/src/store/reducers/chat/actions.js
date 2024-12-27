@@ -117,6 +117,10 @@ const deleteChat = createAsyncThunk(
          } = getState();
 
          //  const url = createURL(`${endpoints.CHATS_CRUD}/${chatId}`);
+         console.log('deleted, ' + chatId);
+
+         console.log(userId);
+
          const url = createURL(`${endpoints.CHATS_CRUD}/${chatId}`, { userId });
 
          const response = await fetch(url, {

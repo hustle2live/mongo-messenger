@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch } from '@/store/hooks.js';
 
 import Image from 'next/image';
+import TrashIcon from '@/images/trash-bin.svg';
 
 import { mockdata } from '../../mockdata.js';
 
-import { actions as chatActionCreator } from '@/store/reducers/chat/chat.slice.js';
+import { actions as chatActionCreator } from '@/store/reducers/chat/chat.js';
 
 import burgerImage from '@/images/burger.jpg';
 import SVGImage from '@/images/christmas-tree-svgrepo-com.svg';
@@ -21,11 +22,14 @@ export const MenuComponent = ({ isOpened, chatList, currentChat }) => {
    const handleChatClick = (id) => {
       dispatch(chatActionCreator.setOpened(id));
    };
+   const handleChatDelete = (id) => {
+      dispatch(chatActionCreator.deleteChat({ chatId: id }));
+   };
 
    const [chatData, setChatData] = useState([]);
 
    useEffect(() => {
-      setChatData(mockdata);
+      setChatData(chatList);
    }, []);
 
    // console.log(chatData);
@@ -102,6 +106,19 @@ export const MenuComponent = ({ isOpened, chatList, currentChat }) => {
                               ) : (
                                  ''
                               )}
+                              <Image
+                                 src={TrashIcon}
+                                 width={20}
+                                 height={30}
+                                 alt='delete'
+                                 className={styles.chats_list__icon_delete}
+                                 onClick={(e) => {
+                                    if (window.confirm('Are You Sure to Delete This Chat ?')) {
+                                       handleChatDelete(_id);
+                                    }
+                                    e.stopPropagation();
+                                 }}
+                              />
                            </div>
                         </li>
                      );

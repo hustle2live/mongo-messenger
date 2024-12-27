@@ -23,7 +23,6 @@ const Page = () => {
    const { chatList } = useAppSelector(({ chatReducer }) => chatReducer);
    const { userId } = useAppSelector(({ authReducer }) => authReducer);
 
-   console.log('userId ', userId);
    useEffect(() => {
       console.log('App running');
       dispatch(chatActionsCreator.fetchChats());
