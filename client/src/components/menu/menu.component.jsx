@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks.js';
 
 import Image from 'next/image';
-import TrashIcon from '@/images/trash-bin.svg';
+import IconTrash from '@/images/trash-bin.svg';
+import IconEdit from '@/images/edit.svg';
 
 import { mockdata } from '../../mockdata.js';
 
@@ -14,8 +15,9 @@ import burgerImage from '@/images/burger.jpg';
 import SVGImage from '@/images/christmas-tree-svgrepo-com.svg';
 
 import styles from './menu.module.scss';
+import { FormElement } from '../form/form.component.jsx';
 
-const ChatsListElement = ({ chatList, handleChatClick, handleChatDelete }) => {
+const ChatsListElement = ({ chatList, handleChatClick, handleChatDelete, handleChatEdit }) => {
    const { isOpened } = useAppSelector(({ chatReducer }) => chatReducer);
 
    const [activeChat, setActiveChat] = useState(isOpened);
@@ -39,7 +41,9 @@ const ChatsListElement = ({ chatList, handleChatClick, handleChatDelete }) => {
                      <li
                         key={_id}
                         className={`${styles.chats_list__item} ${selected}`}
-                        onClick={() => handleChatClick(_id)}
+                        onClick={() => {
+                           handleChatClick(_id);
+                        }}
                      >
                         <div className={styles.chats_list__item_icon}>
                            <Image
@@ -73,37 +77,66 @@ const ChatsListElement = ({ chatList, handleChatClick, handleChatDelete }) => {
                            ) : (
                               ''
                            )}
-                           <Image
-                              src={TrashIcon}
-                              width={20}
-                              height={30}
-                              alt='delete'
-                              className={styles.chats_list__icon_delete}
-                              onClick={(e) => {
-                                 if (window.confirm('Are You Sure to Delete This Chat ?')) {
-                                    handleChatDelete(_id);
-                                 }
-                                 e.stopPropagation();
-                              }}
-                           />
+                           <div className={styles.chats_list__buttons_edit}>
+                              <Image
+                                 src={IconEdit}
+                                 width={20}
+                                 height={30}
+                                 alt='edit'
+                                 className={styles.chats_list__icon_edit}
+                                 onClick={(e) => {
+                                    handleChatEdit({
+                                       id: _id,
+                                       firstName: firstname,
+                                       lastName: lastname
+                                    });
+                                    e.stopPropagation();
+                                 }}
+                              />
+                              <Image
+                                 src={IconTrash}
+                                 width={20}
+                                 height={30}
+                                 alt='delete'
+                                 className={styles.chats_list__icon_delete}
+                                 onClick={(e) => {
+                                    if (window.confirm('Are You Sure to Delete This Chat ?')) {
+                                       handleChatDelete(_id);
+                                    }
+                                    e.stopPropagation();
+                                 }}
+                              />
+                           </div>
                         </div>
                      </li>
                   );
                })
             )}
          </ul>
+         <button>Add Chat</button>
       </div>
    );
 };
 
 export const MenuComponent = ({ chatList }) => {
    const dispatch = useAppDispatch();
+   const [showForm, setShowForm] = useState(false);
+   const [formProps, setFormProps] = useState({});
 
    const handleChatClick = (id) => {
       dispatch(chatActionCreator.setOpened(id));
    };
    const handleChatDelete = (id) => {
       dispatch(chatActionCreator.deleteChat({ chatId: id }));
+   };
+   const handleChatEdit = ({ id, firstName, lastName }) => {
+      setShowForm(true);
+      setFormProps({
+         chatId: id,
+         firstname: firstName,
+         lastname: lastName,
+         actionHandler: chatActionCreator.updateChat
+      });
    };
 
    // const [chatData, setChatData] = useState([]);
@@ -139,7 +172,13 @@ export const MenuComponent = ({ chatList }) => {
    return (
       <div className={styles.menu}>
          <ChatHeadingElement />
-         <ChatsListElement chatList={chatList} handleChatClick={handleChatClick} handleChatDelete={handleChatDelete} />
+         <ChatsListElement
+            chatList={chatList}
+            handleChatClick={handleChatClick}
+            handleChatDelete={handleChatDelete}
+            handleChatEdit={handleChatEdit}
+         />
+         <FormElement formProps={formProps} display={showForm} setDisplay={setShowForm} />
       </div>
    );
 };

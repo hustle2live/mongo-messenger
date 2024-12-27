@@ -77,11 +77,11 @@ const updateChat = createAsyncThunk(
    async (payload, { getState, rejectWithValue, dispatch }) => {
       try {
          const { firstname, lastname, chatId } = payload;
+
          const {
             authReducer: { userId }
          } = getState();
 
-         //  const url = createURL(`${endpoints.CHATS_CRUD}/${chatId}`);
          const url = createURL(`${endpoints.CHATS_CRUD}/${chatId}`, { userId });
 
          const response = await fetch(url, {
@@ -100,6 +100,7 @@ const updateChat = createAsyncThunk(
 
          return data;
       } catch (error) {
+         console.log(error);
          return rejectWithValue(error);
       }
    }
@@ -113,11 +114,6 @@ const deleteChat = createAsyncThunk(
          const {
             authReducer: { userId }
          } = getState();
-
-         //  const url = createURL(`${endpoints.CHATS_CRUD}/${chatId}`);
-         console.log('deleted, ' + chatId);
-
-         console.log(userId);
 
          const url = createURL(`${endpoints.CHATS_CRUD}/${chatId}`, { userId });
 

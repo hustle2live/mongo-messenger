@@ -30,11 +30,7 @@ export const chatSlice = createSlice({
       },
       setChats: (state, action) => {
          const chats = action?.payload ?? [];
-         console.log(chats);
-         console.log(state);
-
          return { ...state, chatList: chats };
-         // state.chatList = chats;
       }
    },
    extraReducers(builder) {
@@ -49,8 +45,11 @@ export const chatSlice = createSlice({
          console.log('rejected...');
       });
 
-      builder.addCase(createChat.fulfilled, (state, action) => {
-         console.log('response : ', action.payload);
+      builder.addCase(createChat.fulfilled, (state, { payload }) => {
+         const updatedChat = [...state.chatList].map((chat) => (chat._id === payload._id ? payload : chat));
+         console.log('updatedChat : ', updatedChat);
+
+         return { ...state, chatList: updatedChat };
       });
       builder.addCase(createChat.pending, (state, action) => {
          console.log('pending...');
@@ -59,18 +58,23 @@ export const chatSlice = createSlice({
          console.log('rejected...');
       });
 
-      builder.addCase(updateChat.fulfilled, (state, action) => {
-         console.log('response : ', action.payload);
+      builder.addCase(updateChat.fulfilled, (state, { payload }) => {
+         console.log('response : ', payload);
+         const updated = state.chatList.map((chat) => (chat._id === payload._id ? payload : chat));
+         return { ...state, chatList: updated };
       });
-      builder.addCase(updateChat.pending, (state, action) => {
-         console.log('pending...');
+      builder.addCase(updateChat.pending, (state, { payload }) => {
+         console.log('response : ', payload);
       });
       builder.addCase(updateChat.rejected, (state, action) => {
          console.log('rejected...');
       });
 
-      builder.addCase(deleteChat.fulfilled, (state, action) => {
-         console.log('response : ', action.payload);
+      builder.addCase(deleteChat.fulfilled, (state, { payload }) => {
+         console.log('response : ', payload);
+         const { _id } = payload;
+         const updated = state.chatList.filter((chat) => chat._id !== _id);
+         return { ...state, chatList: updated };
       });
       builder.addCase(deleteChat.pending, (state, action) => {
          console.log('pending...');
@@ -79,8 +83,9 @@ export const chatSlice = createSlice({
          console.log('rejected...');
       });
 
-      builder.addCase(createMessage.fulfilled, (state, action) => {
-         console.log('response : ', action.payload);
+      builder.addCase(createMessage.fulfilled, (state, { payload }) => {
+         const updated = state.chatList.map((chat) => (chat._id === payload._id ? payload : chat));
+         return { ...state, chatList: updated };
       });
       builder.addCase(createMessage.pending, (state, action) => {
          console.log('pending...');

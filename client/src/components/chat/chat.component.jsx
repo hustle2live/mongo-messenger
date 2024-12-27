@@ -25,13 +25,10 @@ export const ChatComponent = ({ isOpened, chatList, userId }) => {
       if (idx >= 0) {
          setChatData(chatList[idx]['messages']);
       }
-   }, [isOpened]);
-   // }, [isOpened, chatList]);
+   }, [isOpened, chatList]);
 
    const align = (prop) => (prop ? '_left' : '_right');
    const messageClassName = (position) => styles[`chat_wrapper__message${position}`];
-
-   console.log(chatData);
 
    return (
       <div className={styles.chat_wrapper}>

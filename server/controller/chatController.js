@@ -34,12 +34,14 @@ const update = async (req, res) => {
    try {
       const { id } = req.params;
       const { firstname, lastname } = req.body;
+      console.log(firstname, lastname);
 
       if (!firstname && !lastname) {
          throw Error('Error while updatind data. Fields are Empty.');
       }
       const options = { new: true, runValidators: true, returnDocument: 'after' };
-      const chatUpdated = await ChatModel.findByIdAndUpdate(id, { firstname, lastname }, options);
+
+      const chatUpdated = await ChatModel.findByIdAndUpdate(id, { firstname, lastname }, options).populate('messages');
 
       res.status(200).json(chatUpdated);
    } catch (error) {
