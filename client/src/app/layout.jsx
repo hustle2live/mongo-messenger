@@ -1,3 +1,9 @@
+'use client';
+
+import React from 'react';
+import { store } from '@/store/store';
+import { Provider } from 'react-redux';
+
 import { Inter, Montserrat } from 'next/font/google';
 
 const inter = Inter({
@@ -14,9 +20,11 @@ const montserrat = Montserrat({
 
 const RootLayout = ({ children }) => {
    return (
-      <html id='html' lang='en' className={`${montserrat.variable} ${inter.variable}`}>
-         <body id='body'>{children}</body>
-      </html>
+      <Provider store={store}>
+         <html id='html' lang='en' className={`${montserrat.variable} ${inter.variable}`}>
+            <body id='body'>{children}</body>
+         </html>
+      </Provider>
    );
 };
 

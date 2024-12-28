@@ -5,9 +5,9 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import dbClient from './dbClient.js';
 import appRouter from './routes/routes.js';
-import socketHandler from './socket/socket.js';
+import  { socketHandler, socketResponder } from './socket/socket.js';
 
-import { PORT, DATABASE_URL, STATIC_PATH } from './config.js';
+import { PORT, DATABASE_URL, STATIC_PATH, CLIENT_URL } from './config.js';
 
 const app = express();
 
@@ -17,14 +17,21 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
 
+
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+   cors: {
+      origin: CLIENT_URL
+   }
+});
 
 const db = dbClient(DATABASE_URL);
 
 appRouter(app);
 
 socketHandler(io);
+
+export const socketEmitter = socketResponder(io);
 
 server.listen(PORT, () => {
    db.connect();

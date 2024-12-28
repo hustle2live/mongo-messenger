@@ -62,11 +62,10 @@
       <script>
          const socket = io();
          socket.on('LOGIN', (response) => {
-            console.log('trying to login...');
             setTimeout(async () => {
                const data = JSON.parse(response);
                data.success
-                  ? console.log('Login Success =).', 'socketId = ' + data.auth)
+                  ? console.log('Login Success.', 'socketId = ' + data.auth)
                   : console.log('Login Failed!');
             }, 2000);
          });

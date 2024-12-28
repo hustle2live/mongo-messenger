@@ -27,5 +27,6 @@ $bg-primary: #34962c;
 .main_content {
    display: flex;
    flex-wrap: nowrap;
-   width: 100%;
+   width: fit-content;
+   margin: auto;
 }
