@@ -1,4 +1,13 @@
 {
-	"version": 2,
-	"rewrites": [{ "source": "/(.*)", "destination": "/" }]
+    "buildCommand": "npm install",
+    "devCommand": "nodemon index.js",
+    "installCommand": "npm install",
+    "outputDirectory": "/",
+    "version": 2,
+    "env": {
+        "MONGO_DB_PASSWORD": "E7s5Vkzct1Fw1Llj",
+        "MONGO_DB_LOGIN": "mc_hammer",
+        "ATLAS_URI": "mongodb+srv://mc_hammer:E7s5Vkzct1Fw1Llj@cluster0.z7iqj.mongodb.net/db_mongo1?retryWrites=true&w=majority&appName=Cluster0",
+        "CLIENT_APP_URL": "http://localhost:3000"
+    }
 }
