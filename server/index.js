@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import dbClient from './dbClient.js';
 import appRouter from './routes/routes.js';
-import  { socketHandler, socketResponder } from './socket/socket.js';
+import { socketHandler, socketResponder } from './socket/socket.js';
 
 import { PORT, DATABASE_URL, STATIC_PATH, CLIENT_URL } from './config.js';
 
@@ -15,13 +15,20 @@ app.use(express.static(STATIC_PATH));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json());
-app.use(cors());
-
+app.use(
+   cors({
+      origin: CLIENT_URL,
+      methods: ['POST', 'GET', 'PUT', 'DELETE'],
+      allowedHeaders: ['Content-type', 'Authorization']
+   })
+);
 
 const server = createServer(app);
 const io = new Server(server, {
    cors: {
-      origin: CLIENT_URL
+      origin: CLIENT_URL,
+      methods: ['POST', 'GET', 'PUT', 'DELETE'],
+      allowedHeaders: ['Content-type', 'Authorization']
    }
 });
 
