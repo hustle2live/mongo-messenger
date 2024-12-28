@@ -47,9 +47,6 @@ export const chatSlice = createSlice({
       builder.addCase(fetchChats.fulfilled, (state, { payload }) => {
          return { ...state, chatList: payload };
       });
-      builder.addCase(fetchChats.pending, (state, action) => {
-         console.log('pending...');
-      });
       builder.addCase(fetchChats.rejected, (state, action) => {
          console.log('rejected...');
       });
@@ -58,9 +55,6 @@ export const chatSlice = createSlice({
          const updatedChat = [...state.chatList, payload];
          return { ...state, chatList: updatedChat };
       });
-      builder.addCase(createChat.pending, (state, action) => {
-         console.log('pending...');
-      });
       builder.addCase(createChat.rejected, (state, action) => {
          console.log('rejected...');
       });
@@ -68,9 +62,6 @@ export const chatSlice = createSlice({
       builder.addCase(updateChat.fulfilled, (state, { payload }) => {
          const updated = state.chatList.map((chat) => (chat._id === payload._id ? payload : chat));
          return { ...state, chatList: updated };
-      });
-      builder.addCase(updateChat.pending, (state, { payload }) => {
-         console.log('response : ', payload);
       });
       builder.addCase(updateChat.rejected, (state, action) => {
          console.log('rejected...');
@@ -81,9 +72,6 @@ export const chatSlice = createSlice({
          const updated = state.chatList.filter((chat) => chat._id !== _id);
          return { ...state, chatList: updated };
       });
-      builder.addCase(deleteChat.pending, (state, action) => {
-         console.log('pending...');
-      });
       builder.addCase(deleteChat.rejected, (state, action) => {
          console.log('rejected...');
       });
@@ -91,9 +79,6 @@ export const chatSlice = createSlice({
       builder.addCase(createMessage.fulfilled, (state, { payload }) => {
          const updated = state.chatList.map((chat) => (chat._id === payload._id ? payload : chat));
          return { ...state, chatList: updated };
-      });
-      builder.addCase(createMessage.pending, (state, action) => {
-         console.log('pending...');
       });
       builder.addCase(createMessage.rejected, (state, action) => {
          console.log('rejected...');

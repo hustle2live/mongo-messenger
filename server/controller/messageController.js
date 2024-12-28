@@ -10,12 +10,12 @@ const qouteGenerator = async () => {
    try {
       const response = await fetch(QUOTE_URL);
       if (!response.ok) {
-         throw Error('Error while fetching forismatic.com');
+         throw Error('Error while fetching a qoute');
       }
       const result = await response.json();
 
       const { quoteText } = result;
-      console.log(quoteText);
+      console.log('- New quote: ' + quoteText);
 
       return quoteText;
    } catch (error) {
@@ -111,14 +111,12 @@ const flahsChatIds = () => {
 function sendChats() {
    if (!intervalId) {
       intervalId = setInterval(flahsChatIds, 5000);
-      console.log('Auto-sender is running... ');
    }
 }
 
 function stopSendChats() {
    clearInterval(intervalId);
    intervalId = null;
-   console.log('Auto-sender Stoped!');
 }
 
 const autoMode = async (req, res) => {
@@ -136,18 +134,8 @@ const autoMode = async (req, res) => {
    }
 };
 
-const update = async (req, res) => {
-   try {
-      const userData = req.body;
-      console.log(userData);
-   } catch (error) {}
-};
+const update = async (req, res) => {};
 
-const remove = async (req, res) => {
-   try {
-      const userData = req.body;
-      console.log(userData);
-   } catch (error) {}
-};
+const remove = async (req, res) => {};
 
 export const MessageController = { create, update, remove, autoMode };

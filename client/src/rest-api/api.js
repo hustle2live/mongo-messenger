@@ -1,6 +1,6 @@
 const endpoints = {
-   CHATS_CRUD: 'chats', // ? userId= or /:id for PUT, DELETE, GET one
-   MESSAGES_CRUD: 'messages', // ? chatId=  & userId=
+   CHATS_CRUD: 'chats',
+   MESSAGES_CRUD: 'messages',
    USERS_CRUD: 'users',
    AUTO_MODE: 'messages/auto',
 

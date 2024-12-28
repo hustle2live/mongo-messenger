@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { socket } from 'socket/socket';
 
 import { createURL, endpoints } from 'rest-api/api';
 
@@ -30,17 +29,7 @@ export const authSlice = createSlice({
          state.autoResponse = toggle;
       }
    },
-   extraReducers(builder) {
-      // builder.addCase(fetchChats.fulfilled, (state, action) => {
-      //    console.log('response : ', action.payload);
-      // });
-      // builder.addCase(fetchChats.pending, (state, action) => {
-      //    console.log('pending...');
-      // });
-      // builder.addCase(fetchChats.rejected, (state, action) => {
-      //    console.log('rejected...');
-      // });
-   }
+   extraReducers(builder) {}
 });
 
 export const { actions, name, reducer } = authSlice;

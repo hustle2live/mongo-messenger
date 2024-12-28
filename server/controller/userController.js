@@ -11,27 +11,14 @@ const create = async (req, res) => {
       }
 
       res.status(200).json(createUser);
-
-      console.log(userData);
    } catch (error) {
-      console.log('Error occured');
       res.status(500).json({ message: error?.message ?? error });
    }
 };
 
-const update = async (req, res) => {
-   try {
-      const userData = req.body;
-      console.log(userData);
-   } catch (error) {}
-};
+const update = async (req, res) => {};
 
-const remove = async (req, res) => {
-   try {
-      const userData = req.body;
-      console.log(userData);
-   } catch (error) {}
-};
+const remove = async (req, res) => {};
 
 const fetch = async (req, res) => {
    try {

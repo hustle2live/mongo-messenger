@@ -12,7 +12,7 @@ import { actions as chatActionCreator } from '@/store/reducers/chat/chat';
 export const ChatComponent = ({ isOpened, chatList, userId }) => {
    const [chatData, setChatData] = useState([]);
    const [formValue, setFormValue] = useState('');
-   const [chatName, setChatName] = useState('chat name');
+   const [chatName, setChatName] = useState('');
 
    const dispatch = useAppDispatch();
 

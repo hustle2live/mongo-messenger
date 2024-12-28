@@ -16,11 +16,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
-// cors({
-//    origin: ['http://localhost:3000'],
-//    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//    allowedHeaders: ['Content-Type', 'Access-Control-Allow-Origin']
-// })
+
 
 const server = createServer(app);
 const io = new Server(server, {

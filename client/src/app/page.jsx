@@ -40,7 +40,6 @@ const Page = () => {
    };
 
    useEffect(() => {
-      console.log('App running');
       dispatch(chatActionsCreator.fetchChats());
 
       try {
@@ -48,11 +47,9 @@ const Page = () => {
          const actions = {
             income: (data) => {
                dispatch(chatActionsCreator.setNewMessage(data));
-               console.log('income message!');
             },
             connect: (data) => {
                dispatch(authActions.login(data));
-               console.log('connected');
             }
          };
          socketListener(socket, dispatch, actions);
@@ -70,7 +67,7 @@ const Page = () => {
 
    return (
       <>
-         <h1 className={styles.heading}>Wellcome to Next.js App</h1>
+         <h1 className={styles.heading}>Wellcome to Next.js - Mongo Messenger App</h1>
 
          <div className={styles.main_content}>
             <MenuComponent chatList={filteredList} setFilter={setFilter} />
