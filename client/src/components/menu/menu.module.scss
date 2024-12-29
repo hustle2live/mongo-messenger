@@ -1,3 +1,5 @@
+@use '@/styles/mixins';
+
 .menu {
    display: flex;
    flex-direction: column;
@@ -256,4 +258,8 @@
    &:active {
       background: #8ba8c7;
    }
+}
+
+@include mixins.viewport-md {
+   
 }

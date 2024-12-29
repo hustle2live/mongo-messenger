@@ -2,13 +2,13 @@
    "compilerOptions": {
       "baseUrl": "src/",
       "paths": {
-         "@/components/*": ["components/*"],
-         "@/styles/*": ["styles/*"],
-         "@/store/*": ["store/*"],
-         "@/modules/*": ["modules/*"],
          "@/assets/*": ["assets/*"],
+         "@/components/*": ["components/*"],
+         "@/rest-api/*": ["rest-api/*"],
+         "@/socket/*": ["socket/*"],
+         "@/store/*": ["store/*"],
+         "@/styles/*": ["styles/*"],
          "@/images/*": ["assets/images/*"],
-         "@/fonts/*": ["assets/fonts/*"],
          "@/*": ["/*"]
       }
    }

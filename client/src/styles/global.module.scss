@@ -1,3 +1,5 @@
+@use '@/styles/mixins';
+
 $bg-primary: #34962c;
 
 #html,
@@ -29,4 +31,13 @@ $bg-primary: #34962c;
    flex-wrap: nowrap;
    width: fit-content;
    margin: auto;
+}
+
+@include mixins.viewport-md {
+   #html,
+   #body {
+      font-size: 16px;
+      font-weight: 400;
+      font-family: var(--inter);
+   }
 }

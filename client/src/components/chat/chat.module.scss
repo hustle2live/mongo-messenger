@@ -1,3 +1,17 @@
+@use '@/styles/mixins';
+
+@include mixins.viewport-md {
+   .chat_wrapper {
+      position: absolute;
+      transform: translateX(82%);
+      transition: 640ms;
+
+      &.active {
+         transform: translateX(0%);
+      }
+   }
+}
+
 .chat_wrapper {
    display: flex;
    flex-direction: column;
