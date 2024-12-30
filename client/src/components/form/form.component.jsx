@@ -24,6 +24,14 @@ export const FormElement = ({ formProps, display, setDisplay }) => {
       setValueTwo(lastname);
    }, [firstname, lastname, display]);
 
+   const closeFormHandler = (e) => {
+      e.preventDefault();
+      setValueOne('');
+      setValueTwo('');
+      setDisplay(false);
+      e.stopPropagation();
+   };
+
    return (
       <Form
          action={() => {
@@ -48,17 +56,7 @@ export const FormElement = ({ formProps, display, setDisplay }) => {
             </section>
          </div>
          <button type='submit'>Submit</button>
-         <button
-            type='reset'
-            onClick={(e) => {
-               e.preventDefault();
-               setValueOne('');
-               setValueTwo('');
-               setDisplay(false);
-               e.stopPropagation();
-            }}
-            className={styles.close_btn}
-         >
+         <button type='reset' onClick={closeFormHandler} className={styles.close_btn}>
             X
          </button>
       </Form>

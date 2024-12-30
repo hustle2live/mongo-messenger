@@ -40,7 +40,6 @@ export const ChatsListElement = ({ chatList, handleChatClick, handleChatDelete, 
             Christmas Chats <Image src={SVGImage} alt='tree' width={34} height={30} unoptimized />
             <i> with </i>{' '}
             <span onClick={handleAutoResponse} className={styles[`autoResponse${autoMode}`]}>
-               {' '}
                Auto Response{' '}
             </span>
          </p>
