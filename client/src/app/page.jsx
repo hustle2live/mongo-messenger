@@ -15,12 +15,16 @@ import { socket } from 'socket/socket';
 import { actions as authActions } from '@/store/reducers/auth/auth.slice';
 import { actions as chatActionsCreator } from '@/store/reducers/chat/chat';
 import { socketListener } from 'socket/listener';
+import { FormElement } from '@/components/form/form.component';
 
 const Page = () => {
    const dispatch = useAppDispatch();
    const { isOpened } = useAppSelector(({ chatReducer }) => chatReducer);
    const { chatList } = useAppSelector(({ chatReducer }) => chatReducer);
    const { userId } = useAppSelector(({ authReducer }) => authReducer);
+
+   const [showForm, setShowForm] = useState(false);
+   const [formProps, setFormProps] = useState({});
 
    const [filteredList, setFilteredList] = useState(chatList);
    const [filter, setFilter] = useState('');
@@ -65,13 +69,20 @@ const Page = () => {
       filterHandler();
    }, [chatList, filter, setFilter]);
 
+   const disableEvents = showForm ? styles['events_disabled'] : '';
    return (
       <>
          <h1 className={styles.heading}>Wellcome to Next.js - Mongo Messenger App</h1>
-
          <div className={styles.main_content}>
-            <MenuComponent chatList={filteredList} setFilter={setFilter} />
-            <ChatComponent isOpened={isOpened} chatList={chatList} userId={userId} />
+            <MenuComponent
+               chatList={filteredList}
+               setFilter={setFilter}
+               setShowForm={setShowForm}
+               setFormProps={setFormProps}
+               disableEvents={disableEvents}
+            />
+            <ChatComponent disableEvents={disableEvents} isOpened={isOpened} chatList={chatList} userId={userId} />
+            <FormElement formProps={formProps} display={showForm} setDisplay={setShowForm} />
          </div>
       </>
    );

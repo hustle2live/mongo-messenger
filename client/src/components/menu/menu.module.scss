@@ -1,3 +1,5 @@
+@use '@/styles/mixins';
+
 .menu {
    display: flex;
    flex-direction: column;
@@ -212,11 +214,6 @@
          color: rgba(0, 0, 0, 0.549);
          top: 3px;
       }
-
-      &_image {
-      }
-      &_notifier {
-      }
    }
 
    &__icon_edit,
@@ -255,5 +252,126 @@
    box-sizing: border-box;
    &:active {
       background: #8ba8c7;
+   }
+}
+
+@include mixins.viewport-sm {
+   .chats_container,
+   .searchbar_container,
+   .menu {
+      min-width: 100%;
+      max-width: 100%;
+      width: 100%;
+      box-sizing: border-box;
+   }
+
+   .searchbar_container {
+      flex-shrink: 0;
+      flex-grow: 0;
+      height: 20vw;
+      flex-flow: row nowrap;
+      align-items: center;
+      justify-content: space-between;
+
+      &__favourites {
+         margin: 0;
+         height: auto;
+         & > div span {
+            display: none;
+         }
+      }
+
+      &__search_form {
+         width: 50%;
+         position: relative;
+         height: 28px;
+         margin: 0;
+         padding: 0;
+         gap: 0;
+
+         span,
+         label {
+            font-size: 0;
+         }
+
+         input {
+            width: 80%;
+            height: 100%;
+            padding: 2px 25px 2px 30px;
+         }
+
+         button {
+            background: transparent;
+            border: 0;
+            outline: none;
+            width: 0px;
+            padding: 0;
+         }
+      }
+
+      &__search_form > button:before,
+      &__search_form > label:before {
+         display: block;
+         position: absolute;
+         width: 20px;
+         height: 20px;
+         top: 50%;
+         transform: translateY(-50%);
+         opacity: 0.7;
+      }
+
+      &__search_form > label:before {
+         content: url('../../assets/images/search-1.svg');
+         left: 5px;
+      }
+
+      &__search_form > input {
+         min-width: 100%;
+         box-sizing: border-box;
+         flex-basis: unset;
+         max-width: unset;
+         margin: 0;
+      }
+
+      &__search_form > button::before {
+         content: url('../../assets/images/cancel-1.svg');
+         right: 8px;
+         width: 16px;
+         height: 16px;
+      }
+   }
+
+   .chats_container {
+      flex-shrink: 2;
+      flex-grow: 2;
+      height: auto;
+      max-height: unset;
+
+      &__heading {
+         font-size: 5vw;
+         white-space: nowrap;
+         position: relative;
+         padding: 10px;
+         height: 60px;
+         margin: 0;
+
+         i,
+         span {
+            position: absolute;
+            right: 10%;
+            bottom: 0;
+         }
+         i {
+            right: 50%;
+         }
+      }
+   }
+
+   .autoResponse__green {
+      right: 5% !important;
+   }
+
+   .chats_list {
+      width: auto;
    }
 }
