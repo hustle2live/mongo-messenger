@@ -6,6 +6,10 @@
    border: 1px solid lightgray;
 }
 
+.notifier {
+   font-family: var(--inter);
+}
+
 .autoResponse {
    &__red,
    &__green {

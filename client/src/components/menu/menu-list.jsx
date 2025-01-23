@@ -23,12 +23,23 @@ export const ChatsListElement = ({ chatList, handleChatClick, handleChatDelete, 
    const [activeChat, setActiveChat] = useState(isOpened);
    const isNewIncome = (id) => incomes.includes(id);
    const autoMode = autoResponse ? '__green' : '__red';
+   const [delayMessage, setDelayMessage] = useState('');
 
    const dispatch = useAppDispatch();
 
    useEffect(() => {
       setActiveChat(isOpened);
    }, [isOpened]);
+
+   useEffect(() => {
+      setDelayMessage(
+         `During the first load - please, wait until backend service woke up (around 1 minute). It's a pet-project, sorry for inconvenience.. ;)`
+      );
+
+      return setTimeout(() => {
+         setDelayMessage('');
+      }, 60000);
+   }, []);
 
    const handleAutoResponse = () => {
       dispatch(actions.toggleAutoResponse());
@@ -45,7 +56,12 @@ export const ChatsListElement = ({ chatList, handleChatClick, handleChatDelete, 
          </p>
          <ul className={styles.chats_list}>
             {chatList.length < 1 ? (
-               <p>Chat is empty</p>
+               <>
+                  <p className={styles.notifier}>Chat is empty. </p>
+                  <p className={styles.notifier} style={{ color: 'red' }}>
+                     {delayMessage}
+                  </p>
+               </>
             ) : (
                chatList.map(({ _id, firstname, lastname, users, messages }) => {
                   const selected = _id === activeChat ? styles.selected : '';
